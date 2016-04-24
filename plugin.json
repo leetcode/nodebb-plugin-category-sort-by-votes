@@ -1,0 +1,21 @@
+{
+    "id": "nodebb-plugin-category-sort-by-votes",
+    "name": "NodeBB Category Sort by Votes",
+    "description": "Adds functionality to sort topics by votes in category list view",
+    "url": "https://bitbucket.org/wktang/nodebb-plugin-category-sort-by-votes",
+    "library": "./library.js",
+    "hooks": [
+        {
+            "hook": "filter:category.topics.get", "method": "addTopicsVotesInCategory"
+        },
+        {
+            "hook": "filter:recent.build", "method": "addTopicsVotes"
+        },
+        {
+            "hook": "filter:popular.build", "method": "addTopicsVotes"
+        },
+        {
+            "hook": "filter:unread.build", "method": "addTopicsVotes"
+        }
+    ]
+}

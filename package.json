@@ -1,0 +1,29 @@
+{
+  "name": "nodebb-plugin-category-sort-by-votes",
+  "version": "0.1.0",
+  "description": "Adds functionality to sort topics by votes in category list view",
+  "main": "library.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/wktang/nodebb-plugin-category-sort-by-votes"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "votes"
+  ],
+  "author": {
+    "name": "Winston Tang",
+    "email": "winston@leetcode.com"
+  },
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://bitbucket.org/wktang/nodebb-plugin-category-sort-by-votes/issues"
+  },
+  "nbbpm": {
+    "compatibility": "^1.0.1"
+  },
+  "readme": "",
+  "readmeFilename": "README.md"
+}
