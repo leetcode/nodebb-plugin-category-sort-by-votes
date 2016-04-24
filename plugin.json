@@ -17,5 +17,6 @@
         {
             "hook": "filter:unread.build", "method": "addTopicsVotes"
         }
-    ]
+    ],
+    "templates": "./templates"
 }
