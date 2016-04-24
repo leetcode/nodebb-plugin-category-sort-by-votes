@@ -1,17 +1,17 @@
 "use strict";
 
-var topics = module.parent.require('./topics');
+var posts = module.parent.require('./posts');
 
 var theme = {};
 
 theme.addTopicsVotesInCategory = function(params, callback) {
-    var tids = params.topics.map(function(topic) {
-        return topic.tid;
+    var mainPids = params.topics.map(function(topic) {
+        return topic.mainPid;
     });
 
-    topics.getMainPosts(tids, params.uid, function(err, mainPosts) {
-        mainPosts.forEach(function(post, index) {
-            params.topics[index].votes = post.votes;
+    posts.getPostsFields(mainPids, ['votes'], function(err, postsFields) {
+        postsFields.forEach(function(postFields, index) {
+            params.topics[index].votes = postFields['votes'];
         });
 
         callback(null, params);
