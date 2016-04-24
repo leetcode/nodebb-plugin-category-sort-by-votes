@@ -6,16 +6,7 @@
     "library": "./library.js",
     "hooks": [
         {
-            "hook": "filter:category.topics.get", "method": "addTopicsVotesInCategory"
-        },
-        {
-            "hook": "filter:recent.build", "method": "addTopicsVotes"
-        },
-        {
-            "hook": "filter:popular.build", "method": "addTopicsVotes"
-        },
-        {
-            "hook": "filter:unread.build", "method": "addTopicsVotes"
+            "hook": "filter:topics.get", "method": "addTopicsVotesInCategory"
         }
     ],
     "templates": "./templates"
