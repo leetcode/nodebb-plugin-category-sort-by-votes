@@ -11,7 +11,7 @@ var user = require.main.require('./src/user');
 var theme = {};
 var topicCount = 0;
 var topicsProcessed = 0;
-var noop = function (){}
+var noop = function (){};
 
 socketAdmin.plugins.categorySortByVotes = {};
 socketAdmin.plugins.categorySortByVotes.reindex = function(socket, data, callback) {
@@ -23,7 +23,7 @@ socketAdmin.plugins.categorySortByVotes.reindex = function(socket, data, callbac
 			});
 
 			posts.getPostsFields(mainPids, ['pid', 'votes'], function(err, postsFields) {
-				var map = {}
+				var map = {};
 				postsFields.forEach(function(postField, index) {
 					map[postField['pid']] = postField['votes'];
 				});
@@ -44,7 +44,7 @@ socketAdmin.plugins.categorySortByVotes.checkProgress = function(socket, data, c
 	var topicsPercent = topicCount ? (topicsProcessed / topicCount) * 100 : 0;
 	var checkProgress = {
 		topicsPercent: Math.min(100, topicsPercent.toFixed(2)),
-		topicsProcessed: topicsPercent >= 100 ? topicCount : topicsProcessed,
+		topicsProcessed: topicsPercent >= 100 ? topicCount : topicsProcessed
 	};
 	callback(null, checkProgress);
 };
@@ -54,7 +54,7 @@ function renderAdmin(req, res) {
 		topicCount = data.topicCount;
 		res.render('admin/plugins/category-sort-by-votes', data);
 	});
-};
+}
 
 theme.beforeSearch = function (data, callback){
 	user.getSettings(data['uid'], function (err, settings){
