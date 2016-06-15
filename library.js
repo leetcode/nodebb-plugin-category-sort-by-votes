@@ -73,7 +73,7 @@ theme.init = function (data, callback) {
 	callback(null, data);
 };
 
-theme.upvote = function (data) {
+function voteHelper(data, type, callback) {
 	posts.getPostFields(data['pid'], ['tid', 'votes'], function (err, post){
 		topics.getTopics([post['tid']], data['uid'], function (err, topic){
 			if (!topic && topic.length === 0) return;
@@ -81,52 +81,33 @@ theme.upvote = function (data) {
 			if (topic['mainPid'] != data['pid']) return;
 
 			var inc = 0;
-			if (data['current'] === 'unvote') {
-				inc = 1;
-			}
-			else if (data['current'] === 'downvote') {
-				inc = 2;
-			}
-			db.sortedSetIncrBy('cid:' + topic['cid'] + ':tids:votes', inc, topic['tid'], noop);
+			if (type === 'unvote') inc = 0;
+			else if (type === 'upvote') inc = 1;
+			else if (type === 'downvote') inc = -1;
+
+			if (data['current'] === 'unvote') inc += 0;
+			else if (data['current'] === 'downvote') inc += 1;
+			else if (data['current'] === 'upvote') inc -= 1;
+			callback('cid:' + topic['cid'] + ':tids:votes', inc, topic['tid']);
 		})
+	});
+}
+
+theme.upvote = function (data) {
+	voteHelper(data, 'upvote', function (key, inc, tid){
+		db.sortedSetIncrBy(key, inc, tid, noop);
 	});
 };
 
 theme.downvote = function (data) {
-	posts.getPostFields(data['pid'], ['tid', 'votes'], function (err, post){
-		topics.getTopics([post['tid']], data['uid'], function (err, topic){
-			if (!topic && topic.length === 0) return;
-			topic = topic[0];
-			if (topic['mainPid'] != data['pid']) return;
-
-			var inc = 0;
-			if (data['current'] === 'unvote') {
-				inc = -1;
-			}
-			else if (data['current'] === 'upvote') {
-				inc = -2;
-			}
-			db.sortedSetIncrBy('cid:' + topic['cid'] + ':tids:votes', inc, topic['tid'], noop);
-		})
+	voteHelper(data, 'downvote', function (key, inc, tid){
+		db.sortedSetIncrBy(key, inc, tid, noop);
 	});
 };
 
 theme.unvote = function (data) {
-	posts.getPostFields(data['pid'], ['tid', 'votes'], function (err, post){
-		topics.getTopics([post['tid']], data['uid'], function (err, topic){
-			if (!topic && topic.length === 0) return;
-			topic = topic[0];
-			if (topic['mainPid'] != data['pid']) return;
-
-			var inc = 0;
-			if (data['current'] === 'downvote') {
-				inc = 1;
-			}
-			else if (data['current'] === 'upvote') {
-				inc = -1;
-			}
-			db.sortedSetIncrBy('cid:' + topic['cid'] + ':tids:votes', inc, topic['tid'], noop);
-		})
+	voteHelper(data, 'unvote', function (key, inc, tid){
+		db.sortedSetIncrBy(key, inc, tid, noop);
 	});
 };
 
