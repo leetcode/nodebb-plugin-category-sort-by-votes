@@ -6,7 +6,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/wktang/nodebb-plugin-category-sort-by-votes"
+    "url": "https://github.com/wktang/nodebb-plugin-category-sort-by-votes"
   },
   "keywords": [
     "nodebb",
@@ -17,9 +17,9 @@
     "name": "Winston Tang",
     "email": "winston@leetcode.com"
   },
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "bugs": {
-    "url": "https://bitbucket.org/wktang/nodebb-plugin-category-sort-by-votes/issues"
+    "url": "https://github.com/wktang/nodebb-plugin-category-sort-by-votes/issues"
   },
   "nbbpm": {
     "compatibility": "^1.0.1"
