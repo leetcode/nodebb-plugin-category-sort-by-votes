@@ -2,7 +2,7 @@
     "id": "nodebb-plugin-category-sort-by-votes",
     "name": "Sort by Votes",
     "description": "Adds functionality to sort topics by votes in category list view",
-    "url": "https://bitbucket.org/wktang/nodebb-plugin-category-sort-by-votes",
+    "url": "https://github.com/wktang/nodebb-plugin-category-sort-by-votes",
     "library": "./library.js",
     "hooks": [
         { "hook": "static:app.load", "method": "init" },
