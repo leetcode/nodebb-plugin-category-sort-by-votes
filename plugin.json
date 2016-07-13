@@ -11,7 +11,8 @@
         { "hook": "filter:category.topics.prepare", "method": "beforeSearch" },
         { "hook": "action:post.downvote", "method": "downvote" },
         { "hook": "action:post.upvote", "method": "upvote" },
-        { "hook": "action:post.unvote", "method": "unvote" }
+        { "hook": "action:post.unvote", "method": "unvote" },
+        { "hook": "action:post.save", "method": "createPost" }
     ],
     "templates": "./public/templates"
 }

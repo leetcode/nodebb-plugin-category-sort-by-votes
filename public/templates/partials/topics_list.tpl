@@ -75,7 +75,11 @@
 		</div>
 
 		<div class="col-md-1 hidden-sm hidden-xs stats">
-			<span class="human-readable-number" title="{topics.votes}">{topics.votes}</span><br />
+			<!-- IF topics.votes -->
+	    <span class="human-readable-number" title="{topics.votes}">{topics.votes}</span><br />
+	    <!-- ELSE -->
+	    <span class="human-readable-number" title="0">0</span><br />
+	    <!-- ENDIF topics.votes -->
 			<small>VOTES</small>
 		</div>
 

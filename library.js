@@ -135,4 +135,8 @@ theme.addTopicsVotesInCategory = function(params, callback) {
     });
 };
 
+theme.createPost = function (data) {
+	db.sortedSetAdd('cid:' + data['cid'] + ':tids:votes', 0, data['tid'], noop);
+}
+
 module.exports = theme;
