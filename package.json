@@ -22,7 +22,7 @@
     "url": "https://github.com/wktang/nodebb-plugin-category-sort-by-votes/issues"
   },
   "nbbpm": {
-    "compatibility": "^1.0.3"
+    "compatibility": "^1.1.0"
   },
   "readme": "",
   "readmeFilename": "README.md"

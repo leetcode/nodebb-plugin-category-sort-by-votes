@@ -22,10 +22,13 @@ socketAdmin.plugins.categorySortByVotes.reindex = function(socket, data, callbac
 				return topic.mainPid;
 			});
 
-			posts.getPostsFields(mainPids, ['pid', 'votes'], function(err, postsFields) {
+			posts.getPostsFields(mainPids, ['pid', 'votes', 'upvotes', 'downvotes'], function(err, postsFields) {
 				var map = {};
 				postsFields.forEach(function(postField, index) {
-					map[postField['pid']] = postField['votes'];
+					if (postField['upvotes'] || postField['downvotes'])
+						map[postField['pid']] = postField['upvotes'] - postField['downvotes'];
+					else
+						map[postField['pid']] = postField['votes'];
 				});
 
 				data.forEach(function (topic, index){
@@ -126,12 +129,12 @@ theme.addTopicsVotesInCategory = function(params, callback) {
         return topic.mainPid;
     });
 
-    posts.getPostsFields(mainPids, ['votes'], function(err, postsFields) {
+    posts.getPostsFields(mainPids, ['votes', 'upvotes', 'downvotes'], function(err, postsFields) {
         postsFields.forEach(function(postFields, index) {
-						if (postFields['upvotes'] || postFields['downvotes'])
-					      params.topics[index].votes = postFields['upvotes'] - postFields['downvotes'];
-						else
-							  params.topics[index].votes = postFields['votes'];
+	        if (postFields['upvotes'] || postFields['downvotes'])
+                params.topics[index].votes = postFields['upvotes'] - postFields['downvotes'];
+	        else
+		        params.topics[index].votes = postFields['votes'];
         });
 
         callback(null, params);
