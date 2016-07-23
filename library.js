@@ -141,10 +141,11 @@ theme.addTopicsVotesInCategory = function(params, callback) {
     });
 };
 
-theme.createTopic = function (data) {
+theme.createTopic = function (data, callback) {
 	var tid = data.topic.tid;
 	var cid = data.topic.cid;
 	db.sortedSetAdd('cid:' + cid + ':tids:votes', 0, tid, noop);
+	callback(null, data);
 }
 
 module.exports = theme;
