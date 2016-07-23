@@ -12,7 +12,7 @@
         { "hook": "action:post.downvote", "method": "downvote" },
         { "hook": "action:post.upvote", "method": "upvote" },
         { "hook": "action:post.unvote", "method": "unvote" },
-        { "hook": "action:post.save", "method": "createPost" }
+        { "hook": "filter:topic.create", "method": "createTopic" }
     ],
     "templates": "./public/templates"
 }
