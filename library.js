@@ -59,14 +59,26 @@ function renderAdmin(req, res) {
 	});
 }
 
+theme.getSettings = function (data, callback) {
+	if (data.settings && !data.settings.categoryTopicSort) {
+		data.settings.categoryTopicSort = 'most_votes';
+	}
+	callback(null, data);
+};
+
 theme.beforeSearch = function (data, callback){
-	user.getSettings(data['uid'], function (err, settings){
+	function tmp(err, settings){
 		if (settings.categoryTopicSort === 'most_votes') {
 			data.reverse = true;
 			data.set = 'cid:' + data.cid + ':tids:votes';
 		}
 		callback(null, data);
-	})
+	}
+	if (data.settings) {
+		tmp(null, data.settings);
+	} else {
+		user.getSettings(data['uid'], tmp);
+	}
 };
 
 theme.init = function (data, callback) {

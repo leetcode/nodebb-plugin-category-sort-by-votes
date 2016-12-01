@@ -8,6 +8,7 @@
         { "hook": "static:app.load", "method": "init" },
         { "hook": "filter:topics.get", "method": "addTopicsVotesInCategory" },
         { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
+        { "hook": "filter:user.getSettings", "method": "getSettings" },
         { "hook": "filter:category.topics.prepare", "method": "beforeSearch" },
         { "hook": "action:post.downvote", "method": "downvote" },
         { "hook": "action:post.upvote", "method": "upvote" },
