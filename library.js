@@ -26,9 +26,9 @@ socketAdmin.plugins.categorySortByVotes.reindex = function(socket, data, callbac
 				var map = {};
 				postsFields.forEach(function(postField, index) {
 					if (postField['upvotes'] || postField['downvotes'])
-						map[postField['pid']] = postField['upvotes'] - postField['downvotes'];
+						map[postField['pid']] = (postField['upvotes'] - postField['downvotes']) || 0;
 					else
-						map[postField['pid']] = postField['votes'];
+						map[postField['pid']] = postField['votes'] || 0;
 				});
 
 				data.forEach(function (topic, index){
@@ -65,22 +65,6 @@ theme.getSettings = function (data, callback) {
 	}
 	callback(null, data);
 };
-
-theme.beforeSearch = function (data, callback){
-	function tmp(err, settings){
-		if (settings.categoryTopicSort === 'most_votes') {
-			data.reverse = true;
-			data.set = 'cid:' + data.cid + ':tids:votes';
-		}
-		callback(null, data);
-	}
-	if (data.settings) {
-		tmp(null, data.settings);
-	} else {
-		user.getSettings(data['uid'], tmp);
-	}
-};
-
 theme.init = function (data, callback) {
 	data.router.get('/admin/plugins/category-sort-by-votes', data.middleware.admin.buildHeader, renderAdmin);
 	data.router.get('/api/admin/plugins/category-sort-by-votes', renderAdmin);
@@ -130,7 +114,7 @@ theme.addAdminNavigation = function(header, callback) {
 	header.plugins.push({
 		route: '/plugins/category-sort-by-votes',
 		icon: 'fa-edit',
-		name: 'Category Sort'
+		name: 'Category Sort By Votes'
 	});
 
 	callback(null, header);
@@ -144,9 +128,9 @@ theme.addTopicsVotesInCategory = function(params, callback) {
     posts.getPostsFields(mainPids, ['votes', 'upvotes', 'downvotes'], function(err, postsFields) {
         postsFields.forEach(function(postFields, index) {
 	        if (postFields['upvotes'] || postFields['downvotes'])
-                params.topics[index].votes = postFields['upvotes'] - postFields['downvotes'];
+                params.topics[index].votes = (postFields['upvotes'] - postFields['downvotes']) || 0;
 	        else
-		        params.topics[index].votes = postFields['votes'];
+		        params.topics[index].votes = postFields['votes'] || 0;
         });
 
         callback(null, params);
@@ -159,5 +143,19 @@ theme.createTopic = function (data, callback) {
 	db.sortedSetAdd('cid:' + cid + ':tids:votes', 0, tid, noop);
 	callback(null, data);
 }
+
+theme.getSortedSetRangeDirection = (data, callback) => {
+	if (data.sort==='most_votes') {
+	  data.direction = 'highest-to-lowest';
+	}
+	return callback(null, data);
+  }
+  
+theme.buildTopicsSortedSet = (data, callback) => {
+	if (data.data.sort==='most_votes') {
+		data.set="cid:" + data.data.cid + ":tids:votes";
+	}
+	return callback(null, data);
+  }
 
 module.exports = theme;
