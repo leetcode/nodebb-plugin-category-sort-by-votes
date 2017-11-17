@@ -59,12 +59,12 @@ function renderAdmin(req, res) {
 	});
 }
 
-theme.getSettings = function (data, callback) {
+/*theme.getSettings = function (data, callback) {
 	if (data.settings && !data.settings.categoryTopicSort) {
 		data.settings.categoryTopicSort = 'most_votes';
 	}
 	callback(null, data);
-};
+};*/
 theme.init = function (data, callback) {
 	data.router.get('/admin/plugins/category-sort-by-votes', data.middleware.admin.buildHeader, renderAdmin);
 	data.router.get('/api/admin/plugins/category-sort-by-votes', renderAdmin);
