@@ -1,6 +1,6 @@
 {
     "id": "nodebb-plugin-category-sort-by-votes",
-    "name": "Sort by Votes",
+    "name": "Category Sort by Votes",
     "description": "Adds functionality to sort topics by votes in category list view",
     "url": "https://github.com/wktang/nodebb-plugin-category-sort-by-votes",
     "library": "./library.js",
@@ -9,11 +9,17 @@
         { "hook": "filter:topics.get", "method": "addTopicsVotesInCategory" },
         { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
         { "hook": "filter:user.getSettings", "method": "getSettings" },
-        { "hook": "filter:category.topics.prepare", "method": "beforeSearch" },
+        { "hook": "filter:categories.getSortedSetRangeDirection", "method": "getSortedSetRangeDirection"},
+        { "hook": "filter:categories.buildTopicsSortedSet", "method": "buildTopicsSortedSet"},
         { "hook": "action:post.downvote", "method": "downvote" },
         { "hook": "action:post.upvote", "method": "upvote" },
         { "hook": "action:post.unvote", "method": "unvote" },
         { "hook": "filter:topic.create", "method": "createTopic" }
     ],
-    "templates": "./public/templates"
+    "templates": "./public/templates",
+    "scripts": [
+        "./client.js"
+      ],
+    "languages": "languages",
+    "defaultLang": "en-GB"
 }
